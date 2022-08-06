@@ -23,3 +23,24 @@ class ContentSelector:
     def create_metadata_soup(self, X):   #to create metadata soup
         s = X['cast'] + ' ' + X['genre'] + ' ' + X['description'] 
         return s
+
+    def get_recommendations_new(self, data, indices, title, cosine_sim):
+        tmp = title
+        title = title.replace(' ','').lower()
+        idx = indices[title]
+
+        # Get the pairwsie similarity scores of all movies with that movie
+        sim_scores = list(enumerate(cosine_sim[idx]))
+
+        # Sort the movies based on the similarity scores
+        sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+
+        # Get the scores of the 10 most similar movies
+        sim_scores = sim_scores[1:11]
+
+        # Get the movie indices
+        movie_indices = [i[0] for i in sim_scores]
+        print("Your Content:", tmp)
+        print("Recommendations:")
+        # Return the top 10 most similar movies
+        return data['title'].iloc[movie_indices]

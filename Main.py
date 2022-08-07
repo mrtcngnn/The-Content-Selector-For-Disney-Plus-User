@@ -16,12 +16,13 @@ class ContentSelector:
         return output
 
     def clean_text(self, str):         #To create meta data soup, we create full text, without space just with ","
-        s = str.replace(" ","")
-        s = s.lower()
+        if (str != 'NaN'):
+            s = str.replace(" ","")
+            s = s.lower()
         return s
 
     def create_metadata_soup(self, X):   #to create metadata soup
-        s = X['cast'] + ' ' + X['genre'] + ' ' + X['description'] 
+        s = X['cast'] + ' ' + X['genre'] + ' ' + X['description']
         return s
 
     def get_recommendations_new(self, data, indices, title, cosine_sim):
@@ -41,6 +42,5 @@ class ContentSelector:
         # Get the movie indices
         movie_indices = [i[0] for i in sim_scores]
         print("Your Content:", tmp)
-        print("Recommendations:")
         # Return the top 10 most similar movies
-        return data['title'].iloc[movie_indices]
+        return data['title'].iloc[movie_indices], sim_scores

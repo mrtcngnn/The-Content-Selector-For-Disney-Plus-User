@@ -16,9 +16,8 @@ class ContentSelector:
         return output
 
     def clean_text(self, str):         #To create meta data soup, we create full text, without space just with ","
-        if (str != 'NaN'):
-            s = str.replace(" ","")
-            s = s.lower()
+        s = str.replace(" ","")
+        s = s.lower()
         return s
 
     def create_metadata_soup(self, X):   #to create metadata soup
